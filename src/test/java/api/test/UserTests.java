@@ -67,7 +67,7 @@ public class UserTests {
 		//Check data after updating
 		Response responseAfter_Update = UserEndpointsMethods.readUser(this.userPayload.getUsername());
 		
-		AssertJUnit.assertEquals(response.getStatusCode(), 200);
+		AssertJUnit.assertEquals(responseAfter_Update.getStatusCode(), 200);
 	}
 	
 	
