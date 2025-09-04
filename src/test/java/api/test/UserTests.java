@@ -25,13 +25,13 @@ public class UserTests {
 		userPayload = new User();
 
 		userPayload.setId(faker.idNumber().hashCode());
-		userPayload.setUsername(faker.name().username());
+		userPayload.setUsername("twasif");
 		userPayload.setFirstname(faker.name().firstName());
 		userPayload.setLastname(faker.name().lastName());
 		userPayload.setEmail(faker.internet().safeEmailAddress());
 		userPayload.setPassword(faker.internet().password(5, 10));
 		userPayload.setPhone(faker.phoneNumber().cellPhone());
-		userPayload.setUserStatus(0);
+		userPayload.setUserStatus(1);
 	}
 
 	@Test(priority = 1)
@@ -43,9 +43,9 @@ public class UserTests {
 	}
 	
 	
-	@Test(priority = 2)
+	@Test(priority = 2, dependsOnMethods = {"testPostuser"})
 	public void testGetUserByName() {
-		Response response = UserEndpointsMethods.readUser(this.userPayload.getUsername());
+		Response response = UserEndpointsMethods.readUser(userPayload.getUsername());
 		response.then().log().all();
 		
 		AssertJUnit.assertEquals(response.getStatusCode(), 200);
@@ -54,7 +54,6 @@ public class UserTests {
 	
 	@Test(priority = 3)
 	public void testUpdateUserByName() {
-		userPayload.setUsername(faker.name().username());
 		userPayload.setFirstname(faker.name().firstName());
 		userPayload.setLastname(faker.name().lastName());
 		

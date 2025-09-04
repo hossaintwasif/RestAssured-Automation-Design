@@ -8,6 +8,10 @@ import api.payload.User;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -16,11 +20,13 @@ public class UserEndpointsMethods {
 
 	//Create user
 	public static Response createUser(User payload){
+		List<User> users = new ArrayList<>();
+		users.add(payload);
 		
 		Response response = given()
 		   .contentType(ContentType.JSON)
 		   .accept(ContentType.JSON)
-		   .body(payload)
+		   .body(Collections.singletonList(payload))
 		
 		.when()
 		   .post(Routes.post_url);
