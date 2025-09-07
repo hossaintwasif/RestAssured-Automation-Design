@@ -4,15 +4,20 @@ import api.endpoints.UserEndpointsMethods;
 import api.payload.User;
 import api.utilities.DataProviders;
 import io.restassured.response.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 public class DDTest {
 
+    public Logger logger = LogManager.getLogger(DDTest.class);
+
     @Test(priority = 1, dataProvider = "Data", dataProviderClass = DataProviders.class)   //The "Data" string is taken from the "DataProvider" class
     public void testPostUser(String UserId, String Username, String FirstName,
                              String LastName, String Email, String Password, String Phone){
+        logger.info("Post User Created");
         User userPayload = new User();
 
         userPayload.setId((int) Double.parseDouble(UserId));;

@@ -1,5 +1,7 @@
 package api.test;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.annotations.Test;
 import org.testng.AssertJUnit;
 import org.testng.Assert;
@@ -20,6 +22,7 @@ public class UserTests {
 
 	Faker faker;
 	User userPayload;
+	public Logger logger = LogManager.getLogger(UserTests.class);
 
 	@BeforeMethod
 	public void setupData() {
@@ -34,10 +37,13 @@ public class UserTests {
 		userPayload.setPassword(faker.internet().password(5, 10));
 		userPayload.setPhone(faker.phoneNumber().cellPhone());
 		userPayload.setUserStatus(1);
+
+		logger.info("Setup data completed");
 	}
 
 	@Test(priority = 1)
 	public void testPostuser() {
+		logger.info("Create Post User");
 		Response response = UserEndpointsMethods.createUser(userPayload);
 		response.then().log().all();
 
@@ -47,6 +53,7 @@ public class UserTests {
 	
 	@Test(priority = 2, dependsOnMethods = {"testPostuser"})
 	public void testGetUserByName() {
+		logger.info("Read User");
 		Response response = UserEndpointsMethods.readUser(userPayload.getUsername());
 		response.then().log().all();
 		
@@ -56,6 +63,8 @@ public class UserTests {
 	
 	@Test(priority = 3)
 	public void testUpdateUserByName() {
+		logger.info("Update User");
+
 		userPayload.setFirstname(faker.name().firstName());
 		userPayload.setLastname(faker.name().lastName());
 		
@@ -74,6 +83,7 @@ public class UserTests {
 	
 	@Test(priority = 4)
 	public void testDeleteUserByName() {
+		logger.info("Delete User");
 		Response response = UserEndpointsMethods.deleteUser(this.userPayload.getUsername());
 		AssertJUnit.assertEquals(response.getStatusCode(), 200);
 	}
