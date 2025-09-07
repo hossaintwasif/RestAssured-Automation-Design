@@ -25,7 +25,9 @@ public class ExtendReportManager implements ITestListener {
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
         repname = "Test-Report-" + timeStamp + ".html";
         
-        sparkReports = new ExtentSparkReporter(".\\reports\\" + repname);
+//        sparkReports = new ExtentSparkReporter("./reports/" + repname);
+        String reportPath = System.getProperty("user.dir") + "/reports/" + repname;
+        sparkReports = new ExtentSparkReporter(reportPath);
         sparkReports.config().setDocumentTitle("RestAssuredAutomationProject");
         sparkReports.config().setReportName("Pet Store User API");
         sparkReports.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.DARK);
